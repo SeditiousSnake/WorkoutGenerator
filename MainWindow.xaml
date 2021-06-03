@@ -1,0 +1,44 @@
+﻿<Window x:Class="DatabaseTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="categoryViewSource"/>
+    </Window.Resources>
+    <Grid>
+        <DataGrid x:Name="exerciseDataGrid" AutoGenerateColumns="False"
+              EnableRowVirtualization="True"
+              ItemsSource="{Binding Source={StaticResource categoryViewSource}}"
+              Margin="13,13,43,229" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding ExerciseId}"
+                                Header="Exercise Id" Width="SizeToHeader"
+                                IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding BodyPart}" Header="BodyPart"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding TargetArea}" Header="TargetArea"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Type}" Header="Type"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Sets}" Header="Sets"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Beginner}" Header="Beginner"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Normal}" Header="Normal"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Don}" Header="Don"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding DonHigh}" Header="DonHigh"
+                                Width="*"/>
+                <DataGridTextColumn Binding="{Binding Power}" Header="Power"
+                                Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
