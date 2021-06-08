@@ -52,6 +52,8 @@ namespace DatabaseTest
 
             categoryViewSource.Source =
                 _context.Exercises.Local.ToObservableCollection();
+
+            List<string> targetAreas = _context.Exercises.Select(x => x.BodyPart).Distinct().ToList();
         }
 
         protected override void OnClosing(CancelEventArgs e)

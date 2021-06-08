@@ -10,35 +10,52 @@
         <CollectionViewSource x:Key="categoryViewSource"/>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="exerciseDataGrid" AutoGenerateColumns="False"
-              EnableRowVirtualization="True"
-              ItemsSource="{Binding Source={StaticResource categoryViewSource}}"
-              Margin="13,13,43,229" RowDetailsVisibilityMode="VisibleWhenSelected">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ExerciseId}"
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Workout Creator"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <ComboBox ItemsSource="{Binding Source=targetAreas"
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Exercise List"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <DataGrid x:Name="exerciseDataGrid" AutoGenerateColumns="False"
+                EnableRowVirtualization="True"
+                ItemsSource="{Binding Source={StaticResource categoryViewSource}}"
+                Margin="13,13,43,229" RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ExerciseId}"
                                 Header="Exercise Id" Width="SizeToHeader"
                                 IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name"
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Name"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding BodyPart}" Header="BodyPart"
+                        <DataGridTextColumn Binding="{Binding BodyPart}" Header="BodyPart"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding TargetArea}" Header="TargetArea"
+                        <DataGridTextColumn Binding="{Binding TargetArea}" Header="TargetArea"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Type}" Header="Type"
+                        <DataGridTextColumn Binding="{Binding Type}" Header="Type"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Sets}" Header="Sets"
+                        <DataGridTextColumn Binding="{Binding Sets}" Header="Sets"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Beginner}" Header="Beginner"
+                        <DataGridTextColumn Binding="{Binding Beginner}" Header="Beginner"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Normal}" Header="Normal"
+                        <DataGridTextColumn Binding="{Binding Normal}" Header="Normal"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Don}" Header="Don"
+                        <DataGridTextColumn Binding="{Binding Don}" Header="Don"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding DonHigh}" Header="DonHigh"
+                        <DataGridTextColumn Binding="{Binding DonHigh}" Header="DonHigh"
                                 Width="*"/>
-                <DataGridTextColumn Binding="{Binding Power}" Header="Power"
+                        <DataGridTextColumn Binding="{Binding Power}" Header="Power"
                                 Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
