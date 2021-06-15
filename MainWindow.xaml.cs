@@ -57,7 +57,7 @@ namespace DatabaseTest
             BodyPartDropdown.ItemsSource = _context.Exercises.Select(x => x.BodyPart).Distinct().ToList();
             TypeDropdown.ItemsSource = _context.Exercises.Select(x => x.Type).Distinct().ToList();
             SetsDropdown.ItemsSource = _context.Exercises.Select(x => x.Sets).Distinct().ToList();
-            BeginnerDropdown.ItemsSource = _context.Exercises.Select(x => x.Beginner).Distinct().ToList();
+            IntensityDropdown.ItemsSource = new List<string>() { "Beginner", "Normal", "Don", "Don High", "Power"};
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -69,6 +69,27 @@ namespace DatabaseTest
         private void BodyPart_SelectionChanged(object sender, EventArgs e)
         {
             TargetAreaDropdown.ItemsSource = _context.Exercises.Where(x => x.BodyPart == (string) BodyPartDropdown.SelectedItem).Select(x => x.TargetArea).Distinct().ToList();
+        }
+
+        private void TargetArea_SelectionChanged(object sender, EventArgs e)
+        {
+            TypeDropdown.ItemsSource = _context.Exercises
+                .Where(x => x.BodyPart == (string)BodyPartDropdown.SelectedItem
+                && x.TargetArea == (string)TargetAreaDropdown.SelectedItem)
+                .Select(x => x.Type)
+                .Distinct()
+                .ToList();
+        }
+
+        private void Type_SelectionChanged(object sender, EventArgs e)
+        {
+            SetsDropdown.ItemsSource = _context.Exercises
+                .Where(x => x.BodyPart == (string)BodyPartDropdown.SelectedItem
+                && x.TargetArea == (string)TargetAreaDropdown.SelectedItem
+                && x.Type == (string) TypeDropdown.SelectedItem)
+                .Select(x => x.Type)
+                .Distinct()
+                .ToList();
         }
     }
 }
