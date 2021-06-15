@@ -53,13 +53,22 @@ namespace DatabaseTest
             categoryViewSource.Source =
                 _context.Exercises.Local.ToObservableCollection();
 
-            List<string> targetAreas = _context.Exercises.Select(x => x.BodyPart).Distinct().ToList();
+            TargetAreaDropdown.ItemsSource = _context.Exercises.Select(x => x.TargetArea).Distinct().ToList();
+            BodyPartDropdown.ItemsSource = _context.Exercises.Select(x => x.BodyPart).Distinct().ToList();
+            TypeDropdown.ItemsSource = _context.Exercises.Select(x => x.Type).Distinct().ToList();
+            SetsDropdown.ItemsSource = _context.Exercises.Select(x => x.Sets).Distinct().ToList();
+            BeginnerDropdown.ItemsSource = _context.Exercises.Select(x => x.Beginner).Distinct().ToList();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             _context.Dispose();
             base.OnClosing(e);
+        }
+
+        private void BodyPart_SelectionChanged(object sender, EventArgs e)
+        {
+            TargetAreaDropdown.ItemsSource = _context.Exercises.Where(x => x.BodyPart == (string) BodyPartDropdown.SelectedItem).Select(x => x.TargetArea).Distinct().ToList();
         }
     }
 }

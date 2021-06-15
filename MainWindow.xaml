@@ -17,7 +17,18 @@
                         <TextBlock Text="Workout Creator"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ComboBox ItemsSource="{Binding Source=targetAreas"
+                <StackPanel>
+                    <Label Content="Body Part:"/>
+                    <ComboBox Name="BodyPartDropdown" SelectionChanged="BodyPart_SelectionChanged"/>
+                    <Label Content="Target Area:" />
+                    <ComboBox Name="TargetAreaDropdown"/>
+                    <Label Content="Type"/>
+                    <ComboBox Name="TypeDropdown"/>
+                    <Label Content="Sets"/>
+                    <ComboBox Name="SetsDropdown"/>
+                    <Label Content="Beginner"/>
+                    <ComboBox Name="BeginnerDropdown"/>
+                </StackPanel>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
