@@ -17,18 +17,33 @@
                         <TextBlock Text="Workout Creator"/>
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel>
-                    <Label Content="Body Part:"/>
-                    <ComboBox Name="BodyPartDropdown" SelectionChanged="BodyPart_SelectionChanged"/>
-                    <Label Content="Target Area:" />
-                    <ComboBox Name="TargetAreaDropdown" SelectionChanged="TargetArea_SelectionChanged"/>
-                    <Label Content="Type:"/>
-                    <ComboBox Name="TypeDropdown" SelectionChanged="Type_SelectionChanged"/>
-                    <Label Content="Sets:"/>
-                    <ComboBox Name="SetsDropdown"/>
-                    <Label Content="Intensity:"/>
-                    <ComboBox Name="IntensityDropdown"/>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black"
+                            BorderThickness="1,0,0,0" Background="{x:Null}"/>
+                    <StackPanel Grid.Column="0">
+                        <Label Content="Body Part:"/>
+                        <ComboBox Name="BodyPartDropdown" SelectionChanged="BodyPart_SelectionChanged" Width="250px" HorizontalAlignment="Left"/>
+                        <Label Content="Target Area:" />
+                        <ComboBox Name="TargetAreaDropdown" SelectionChanged="TargetArea_SelectionChanged" Width="250px" HorizontalAlignment="Left"/>
+                        <Label Content="Type:"/>
+                        <ComboBox Name="TypeDropdown" SelectionChanged="Type_SelectionChanged" Width="250px" HorizontalAlignment="Left"/>
+                        <Label Content="Sets:"/>
+                        <ComboBox Name="SetsDropdown" Width="250px" HorizontalAlignment="Left"/>
+                        <Label Content="Intensity:"/>
+                        <ComboBox Name="IntensityDropdown" Width="250px" HorizontalAlignment="Left"/>
+                        <Label/>
+                        <Button Name="AddButton" Click="AddResult" Content="Add" Width="200px" Height="25px"></Button>
+                    </StackPanel>
+                    <ScrollViewer Grid.Column="1">
+                        <StackPanel Name="ResultsPanel">
+                            
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

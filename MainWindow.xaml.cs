@@ -87,9 +87,21 @@ namespace DatabaseTest
                 .Where(x => x.BodyPart == (string)BodyPartDropdown.SelectedItem
                 && x.TargetArea == (string)TargetAreaDropdown.SelectedItem
                 && x.Type == (string) TypeDropdown.SelectedItem)
-                .Select(x => x.Type)
+                .Select(x => x.Sets)
                 .Distinct()
                 .ToList();
+        }
+
+        private void AddResult(object sender, EventArgs e)
+        {
+            ResultsPanel.Children.Add(new Rectangle
+            {
+                Width=100,
+                Height=20,
+                StrokeThickness = 1,
+                Stroke = new SolidColorBrush(Colors.Black),
+                Margin = new Thickness(5)
+            });
         }
     }
 }
