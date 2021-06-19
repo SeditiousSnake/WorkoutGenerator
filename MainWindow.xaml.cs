@@ -107,6 +107,7 @@ namespace DatabaseTest
             ResultsPanel.Children.Add(new PlanStep
             {
                 Exercise = randomExercise,
+                PotentialExercises = possibleExercises,
                 NumberInList = ResultsPanel.Children.Count + 1
             });
         }

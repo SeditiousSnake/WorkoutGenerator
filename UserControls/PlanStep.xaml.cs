@@ -1,4 +1,5 @@
 ﻿using DatabaseTest;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace WorkoutGenerator.UserControls
@@ -15,6 +16,7 @@ namespace WorkoutGenerator.UserControls
         }
 
         public Exercise Exercise { get; set; }
+        public List<Exercise> PotentialExercises { get; set; }
         public int NumberInList { get; set; }
     }
 }

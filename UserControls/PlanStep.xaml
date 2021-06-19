@@ -17,17 +17,21 @@
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding NumberInList}" VerticalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                    <TextBlock Text="{Binding Exercise.Name, StringFormat=Exercise: {0}  }"/>
+                    <Label Content="Exercise: "/>
+                    <ComboBox Name="ExerciseDropdown"
+                              ItemsSource="{Binding PotentialExercises}"
+                              SelectedValue="{Binding Exercise, Mode=TwoWay}"
+                              DisplayMemberPath="Name"
+                              Width="300"/>
                     <Separator Opacity="0" Width="15"></Separator>
                     <TextBlock Text="{Binding Exercise.BodyPart, StringFormat=Body Part: {0}  }"/>
-                    <Separator Opacity="0" Width="15"></Separator>
-                    <TextBlock Text="{Binding Exercise.TargetArea, StringFormat=Target Area: {0}  }"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                    <TextBlock Text="{Binding Exercise.TargetArea, StringFormat=Target Area: {0}  }"/>
+                    <Separator Opacity="0" Width="15"></Separator>
                     <TextBlock Text="{Binding Exercise.Type, StringFormat= Type: {0} }"/>
                     <Separator Opacity="0" Width="15"></Separator>
                     <TextBlock Text="{Binding Exercise.Sets, StringFormat= Sets: {0} }"/>
