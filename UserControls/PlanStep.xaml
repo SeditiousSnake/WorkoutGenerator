@@ -8,27 +8,35 @@
              mc:Ignorable="d">
     <Grid>
         <Border Background="AliceBlue" CornerRadius="3" Margin="5">
-            <StackPanel Orientation="Horizontal" Height="35">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding NumberInList}" VerticalAlignment="Center"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <TextBlock Text="{Binding Exercise.Name}"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <TextBlock Text="{Binding Exercise.BodyPart}"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <TextBlock Text="{Binding Exercise.TargetArea}"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <TextBlock Text="{Binding Exercise.Type, StringFormat={}{0} Type}"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <TextBlock Text="{Binding Exercise.Sets}"/>
-                <Separator Opacity="0" Width="5"></Separator>
-                <Button>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                    <TextBlock Text="{Binding Exercise.Name, StringFormat=Exercise: {0}  }"/>
+                    <Separator Opacity="0" Width="15"></Separator>
+                    <TextBlock Text="{Binding Exercise.BodyPart, StringFormat=Body Part: {0}  }"/>
+                    <Separator Opacity="0" Width="15"></Separator>
+                    <TextBlock Text="{Binding Exercise.TargetArea, StringFormat=Target Area: {0}  }"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                    <TextBlock Text="{Binding Exercise.Type, StringFormat= Type: {0} }"/>
+                    <Separator Opacity="0" Width="15"></Separator>
+                    <TextBlock Text="{Binding Exercise.Sets, StringFormat= Sets: {0} }"/>
+                    <Separator Opacity="0" Width="5"></Separator>
+                </StackPanel>
+                <Button Grid.Column="2" Grid.RowSpan="2">
                     <mah:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/>
                 </Button>
-                <Separator Opacity="0" Width="5"></Separator>
-                <Button>
-                    <mah:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;"/>
-                </Button>
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
