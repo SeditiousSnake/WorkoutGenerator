@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkoutGenerator.UserControls;
 
 namespace DatabaseTest
 {
@@ -29,6 +30,7 @@ namespace DatabaseTest
         private CollectionViewSource categoryViewSource;
         private ISampleService sampleService;
         private AppSettings settings;
+        private Random rand;
 
         public MainWindow(ISampleService sampleService,
                           IOptions<AppSettings> settings)
@@ -38,6 +40,7 @@ namespace DatabaseTest
             this.settings = settings.Value;
             categoryViewSource =
                 (CollectionViewSource)FindResource(nameof(categoryViewSource));
+            rand = new Random();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -94,13 +97,15 @@ namespace DatabaseTest
 
         private void AddResult(object sender, EventArgs e)
         {
-            ResultsPanel.Children.Add(new Rectangle
+            var possibleExercises = _context.Exercises
+                .Where(x => x.BodyPart == (string)BodyPartDropdown.SelectedItem
+                && x.TargetArea == (string)TargetAreaDropdown.SelectedItem
+                && x.Type == (string)TypeDropdown.SelectedItem)
+                .ToList();
+            Exercise randomExercise = possibleExercises[rand.Next(possibleExercises.Count)];
+            ResultsPanel.Children.Add(new PlanStep
             {
-                Width=100,
-                Height=20,
-                StrokeThickness = 1,
-                Stroke = new SolidColorBrush(Colors.Black),
-                Margin = new Thickness(5)
+                Exercise = randomExercise
             });
         }
     }
