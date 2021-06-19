@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="Full Training Database.xlsx" />
+    <None Remove="Images\cross.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +42,12 @@
     <Content Include="Full Training Database.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cross.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

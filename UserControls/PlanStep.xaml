@@ -2,18 +2,33 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkoutGenerator.UserControls"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding NumberInList}"/>
-            <Label Content="{Binding Exercise.Name}"/>
-            <Label Content="{Binding Exercise.BodyPart}"/>
-            <Label Content="{Binding Exercise.TargetArea}"/>
-            <Label Content="{Binding Exercise.Type}"/>
-            <Label Content="{Binding Exercise.Sets}"/>
-            <Button Content="Remove"/>
-        </StackPanel>
+        <Border Background="AliceBlue" CornerRadius="3" Margin="5">
+            <StackPanel Orientation="Horizontal" Height="35">
+                <TextBlock Text="{Binding NumberInList}" VerticalAlignment="Center"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <TextBlock Text="{Binding Exercise.Name}"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <TextBlock Text="{Binding Exercise.BodyPart}"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <TextBlock Text="{Binding Exercise.TargetArea}"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <TextBlock Text="{Binding Exercise.Type, StringFormat={}{0} Type}"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <TextBlock Text="{Binding Exercise.Sets}"/>
+                <Separator Opacity="0" Width="5"></Separator>
+                <Button>
+                    <mah:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/>
+                </Button>
+                <Separator Opacity="0" Width="5"></Separator>
+                <Button>
+                    <mah:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;"/>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>
