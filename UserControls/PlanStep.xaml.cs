@@ -15,5 +15,6 @@ namespace WorkoutGenerator.UserControls
         }
 
         public Exercise Exercise { get; set; }
+        public int NumberInList { get; set; }
     }
 }

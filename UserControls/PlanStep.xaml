@@ -13,16 +13,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label Content="{Binding Exercise.Name}"/>
-        <Label Grid.Column="1">
+        <Label Content="{Binding NumberInList}"/>
+        <Label Grid.Column ="1" Content="{Binding Exercise.Name}"/>
+        <Label Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Exercise.TargetArea}"/>
                 <TextBlock Text="/"/>
                 <TextBlock Text="{Binding Exercise.Type}"/>
             </StackPanel>
         </Label>
-        <TextBox MaxLength="100" Grid.Row="1" Grid.ColumnSpan="2" Name="txtLimitedInput" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
+        <TextBox MaxLength="100" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="txtLimitedInput" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
     </Grid>
 </UserControl>
