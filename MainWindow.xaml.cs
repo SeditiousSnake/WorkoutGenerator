@@ -32,6 +32,7 @@ namespace DatabaseTest
         private ISampleService sampleService;
         private AppSettings settings;
         private Random rand;
+        private List<PlanStep> planSteps;
 
         public MainWindow(ISampleService sampleService,
                           IOptions<AppSettings> settings)
@@ -42,6 +43,7 @@ namespace DatabaseTest
             categoryViewSource =
                 (CollectionViewSource)FindResource(nameof(categoryViewSource));
             rand = new Random();
+            planSteps = new List<PlanStep>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -104,12 +106,50 @@ namespace DatabaseTest
                 && x.Type == (string)TypeDropdown.SelectedItem)
                 .ToList();
             Exercise randomExercise = possibleExercises[rand.Next(possibleExercises.Count)];
-            ResultsPanel.Children.Add(new PlanStep
+            string repsString = GetRepsString(randomExercise);
+            var newStep = new PlanStep
             {
                 Exercise = randomExercise,
                 PotentialExercises = possibleExercises,
-                NumberInList = ResultsPanel.Children.Count + 1
-            });
+                NumberInList = ResultsPanel.Children.Count + 1,
+                Reps = repsString,
+                StepId = Guid.NewGuid()
+            };
+
+            planSteps.Add(newStep);
+            ResultsPanel.Children.Add(newStep);
+        }
+
+        private string GetRepsString(Exercise exercise)
+        {
+            var repsString = "";
+            switch (IntensityDropdown.SelectedItem)
+            {
+                case ("Beginner"):
+                    repsString = exercise.Beginner;
+                    break;
+                case ("Normal"):
+                    repsString = exercise.Normal;
+                    break;
+                case ("Don"):
+                    repsString = exercise.Don;
+                    break;
+                case ("Don High"):
+                    repsString = exercise.DonHigh;
+                    break;
+                case ("Power"):
+                    repsString = exercise.Power;
+                    break;
+            }
+            return repsString;
+        }
+
+        public void RemoveStep(object sender, EventArgs e)
+        {
+            Guid stepId = ((Guid)((Button)sender).Tag);
+            var stepToRemove = planSteps.Single(x => x.StepId == stepId);
+            planSteps.Remove(stepToRemove);
+            ResultsPanel.Children.Remove(stepToRemove);
         }
     }
 }

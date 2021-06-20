@@ -21,7 +21,7 @@
                 </TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="260px"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black"
