@@ -151,5 +151,12 @@ namespace DatabaseTest
             planSteps.Remove(stepToRemove);
             ResultsPanel.Children.Remove(stepToRemove);
         }
+
+        public void Exercise_SelectionChanged(object sender, EventArgs e)
+        {
+            Guid stepId = ((Guid)((ComboBox)sender).Tag);
+            var stepToUpdate = planSteps.Single(x => x.StepId == stepId);
+            stepToUpdate.Reps = GetRepsString(stepToUpdate.Exercise);
+        }
     }
 }

@@ -22,6 +22,8 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                     <Label Content="Exercise: "/>
                     <ComboBox Name="ExerciseDropdown"
+                              SelectionChanged="Exercise_SelectionChanged"
+                              Tag="{Binding StepId}"
                               ItemsSource="{Binding PotentialExercises}"
                               SelectedValue="{Binding Exercise, Mode=TwoWay}"
                               DisplayMemberPath="Name"
@@ -36,7 +38,7 @@
                     <Separator Opacity="0" Width="15"></Separator>
                     <TextBlock Text="{Binding Exercise.Sets, StringFormat= Sets: {0} }"/>
                     <Separator Opacity="0" Width="15"></Separator>
-                    <TextBlock Text="{Binding Reps, StringFormat= Reps: {0} }"/>
+                    <TextBlock Text="{Binding Reps, StringFormat= Reps: {0}, Mode=TwoWay }"/>
                 </StackPanel>
                 <Button Grid.Column="2" Grid.RowSpan="2" Click="RemoveStep" Tag="{Binding StepId}">
                     <mah:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;"/>
