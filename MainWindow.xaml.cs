@@ -87,17 +87,6 @@ namespace DatabaseTest
                 .ToList();
         }
 
-        private void Type_SelectionChanged(object sender, EventArgs e)
-        {
-            SetsDropdown.ItemsSource = _context.Exercises
-                .Where(x => x.BodyPart == (string)BodyPartDropdown.SelectedItem
-                && x.TargetArea == (string)TargetAreaDropdown.SelectedItem
-                && x.Type == (string) TypeDropdown.SelectedItem)
-                .Select(x => x.Sets)
-                .Distinct()
-                .ToList();
-        }
-
         private void AddResult(object sender, EventArgs e)
         {
             var possibleExercises = _context.Exercises
