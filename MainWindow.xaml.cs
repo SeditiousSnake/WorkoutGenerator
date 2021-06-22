@@ -120,9 +120,15 @@ namespace DatabaseTest
             ResultsPanel.Children.Add(newStep);
         }
 
+        private void ExportPlan(object sender, EventArgs e)
+        {
+            sampleService.ExportToExcel(planSteps);
+        }
+
         private string GetRepsString(Exercise exercise)
         {
             var repsString = "";
+            //TODO: Need to stop basing this off current dropdown selection, instead use what was assigned to the exercise step
             switch (IntensityDropdown.SelectedItem)
             {
                 case ("Beginner"):

@@ -39,6 +39,7 @@
                         <ComboBox Name="IntensityDropdown" Width="250px" HorizontalAlignment="Left"/>
                         <Label/>
                         <Button Name="AddButton" Click="AddResult" Content="Add" Width="200px" Height="25px"></Button>
+                        <Button Name="ExportButton" Click="ExportPlan" Content="Export" Width="200px" Height="25px"></Button>
                     </StackPanel>
                     <ScrollViewer Grid.Column="1">
                         <StackPanel Name="ResultsPanel" Margin="10">

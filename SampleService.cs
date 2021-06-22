@@ -1,6 +1,10 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
+using WorkoutGenerator.UserControls;
 
 namespace DatabaseTest
 {
@@ -8,6 +12,7 @@ namespace DatabaseTest
     {
         string GetCurrentDate();
         List<Exercise> GetExercisesFromExcel();
+        Task ExportToExcel(List<PlanStep> planSteps);
     }
 
     public class SampleService : ISampleService
@@ -82,6 +87,60 @@ namespace DatabaseTest
             }
 
             return exercises;
+        }
+
+        //TODO: Clean up this method to use a model, not a view. Fixing the binding for the exercise list might help.
+        public async Task ExportToExcel(List<PlanStep> planSteps)
+        {
+            Application excel = new Application();
+            Workbook wb = null;
+            Worksheet sheet1 = null;
+
+            excel.Visible = true;
+            wb = excel.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            try
+            {
+                int row = 1;
+                sheet1 = (Worksheet) wb.Worksheets[1];
+                sheet1.Name = "Workout Plan";
+                sheet1.Cells[row, 1] = "Exercise Name";
+                sheet1.Cells[row, 2] = "Body Part";
+                sheet1.Cells[row, 3] = "Target Area";
+                sheet1.Cells[row, 4] = "Type";
+                sheet1.Cells[row, 5] = "Sets";
+                sheet1.Cells[row, 6] = "Reps";
+
+                foreach (PlanStep step in planSteps)
+                {
+                    row++;
+
+                    sheet1.Cells[row, 1] = step.Exercise.Name;
+                    sheet1.Cells[row, 2] = step.Exercise.BodyPart;
+                    sheet1.Cells[row, 3] = step.Exercise.TargetArea;
+                    sheet1.Cells[row, 4] = step.Exercise.Type;
+                    sheet1.Cells[row, 5] = step.Exercise.Sets;
+                    sheet1.Cells[row, 6] = step.Reps;
+                }
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.DefaultExt = "xlsx";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                }
+
+                excel.Quit();
+                Marshal.ReleaseComObject(sheet1);
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(excel);
+            }
+            catch (System.Exception exHandle)
+            {
+
+                System.Console.WriteLine("Exception: " + exHandle.Message);
+
+                System.Console.ReadLine();
+
+            }
         }
     }
 }

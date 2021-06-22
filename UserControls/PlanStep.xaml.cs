@@ -29,12 +29,14 @@ namespace WorkoutGenerator.UserControls
             DependencyProperty.Register("Reps", typeof(string), typeof(PlanStep), new UIPropertyMetadata(""));
         public Guid StepId { get; set; }
 
+        //TODO: Can we remove this with two-way binding?
         private void RemoveStep(object sender, EventArgs e)
         {
             MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             mainWindow.RemoveStep(sender, e);
         }
 
+        //TODO: See if better Two-Way binding can eliminate the need for this.
         private void Exercise_SelectionChanged(object sender, EventArgs e)
         {
             MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
