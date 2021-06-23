@@ -32,7 +32,7 @@
                         <Label Content="Target Area:" />
                         <ComboBox Name="TargetAreaDropdown" SelectionChanged="TargetArea_SelectionChanged" Width="250px" HorizontalAlignment="Left"/>
                         <Label Content="Type:"/>
-                        <ComboBox Name="TypeDropdown" SelectionChanged="Type_SelectionChanged" Width="250px" HorizontalAlignment="Left"/>
+                        <ComboBox Name="TypeDropdown" Width="250px" HorizontalAlignment="Left"/>
                         <Label Content="Intensity:"/>
                         <ComboBox Name="IntensityDropdown" Width="250px" HorizontalAlignment="Left"/>
                         <Label/>

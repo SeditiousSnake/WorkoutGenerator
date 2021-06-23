@@ -62,7 +62,6 @@ namespace DatabaseTest
             TargetAreaDropdown.ItemsSource = _context.Exercises.Select(x => x.TargetArea).Distinct().ToList();
             BodyPartDropdown.ItemsSource = _context.Exercises.Select(x => x.BodyPart).Distinct().ToList();
             TypeDropdown.ItemsSource = _context.Exercises.Select(x => x.Type).Distinct().ToList();
-            SetsDropdown.ItemsSource = _context.Exercises.Select(x => x.Sets).Distinct().ToList();
             IntensityDropdown.ItemsSource = new List<string>() { "Beginner", "Normal", "Don", "Don High", "Power"};
         }
 
