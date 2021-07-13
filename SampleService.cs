@@ -96,7 +96,6 @@ namespace DatabaseTest
             Workbook wb = null;
             Worksheet sheet1 = null;
 
-            excel.Visible = true;
             wb = excel.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
             try
             {
@@ -123,6 +122,7 @@ namespace DatabaseTest
                 }
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.DefaultExt = "xlsx";
+                saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     wb.SaveAs(saveFileDialog.FileName);

@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using WorkoutGenerator;
 
 namespace DatabaseTest
 {
     class ProductContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ExerciseTemplate> ExerciseTemplates { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
