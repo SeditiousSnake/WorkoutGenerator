@@ -40,7 +40,7 @@ namespace DatabaseTest
             services.Configure<AppSettings>
                 (configuration.GetSection(nameof(AppSettings)));
 
-            services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<IExcelService, ExcelService>();
 
             services.AddTransient(typeof(MainWindow));
         }

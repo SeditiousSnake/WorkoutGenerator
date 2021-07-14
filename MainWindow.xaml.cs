@@ -29,16 +29,16 @@ namespace DatabaseTest
             new ProductContext();
 
         private CollectionViewSource categoryViewSource;
-        private ISampleService sampleService;
+        private IExcelService excelService;
         private AppSettings settings;
         private Random rand;
         private List<PlanStep> planSteps;
 
-        public MainWindow(ISampleService sampleService,
+        public MainWindow(IExcelService excelService,
                           IOptions<AppSettings> settings)
         {
             InitializeComponent();
-            this.sampleService = sampleService;
+            this.excelService = excelService;
             this.settings = settings.Value;
             categoryViewSource =
                 (CollectionViewSource)FindResource(nameof(categoryViewSource));
@@ -53,7 +53,7 @@ namespace DatabaseTest
 
             _context.Exercises.RemoveRange(_context.Exercises);
             _context.SaveChanges();
-            _context.Exercises.AddRange(sampleService.GetExercisesFromExcel());
+            _context.Exercises.AddRange(excelService.GetExercisesFromExcel());
             _context.SaveChanges();
 
             categoryViewSource.Source =
@@ -110,7 +110,7 @@ namespace DatabaseTest
 
         private void ExportPlan(object sender, EventArgs e)
         {
-            sampleService.ExportToExcel(planSteps);
+            excelService.ExportToExcel(planSteps);
         }
 
         private string GetRepsString(Exercise exercise)

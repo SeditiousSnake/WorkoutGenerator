@@ -8,14 +8,14 @@ using WorkoutGenerator.UserControls;
 
 namespace DatabaseTest
 {
-    public interface ISampleService
+    public interface IExcelService
     {
         string GetCurrentDate();
         List<Exercise> GetExercisesFromExcel();
         Task ExportToExcel(List<PlanStep> planSteps);
     }
 
-    public class SampleService : ISampleService
+    public class ExcelService : IExcelService
     {
         public string GetCurrentDate() => System.DateTime.Now.ToLongDateString();
 
