@@ -15,6 +15,7 @@ namespace DatabaseTest
         List<Exercise> GetExerciseDatabaseFromExcel();
         Task<List<WorkoutStep>> GenerateWorkoutForTemplate();
         Task ExportToExcel(List<PlanStep> planSteps);
+        Task ExportToExcel(List<OutputStep> outputSteps);
     }
 
     public class ExcelService : IExcelService
@@ -91,6 +92,7 @@ namespace DatabaseTest
             Marshal.ReleaseComObject(sheet1);
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(excel);
+            Marshal.ReleaseComObject(range);
 
             return exercises;
         }
@@ -208,9 +210,60 @@ namespace DatabaseTest
                 Marshal.ReleaseComObject(sheet1);
                 Marshal.ReleaseComObject(wb);
                 Marshal.ReleaseComObject(excel);
+                Marshal.ReleaseComObject(range);
             }
 
             return steps;
+        }
+
+        public async Task ExportToExcel(List<OutputStep> outputSteps)
+        {
+            Application excel = new Application();
+            Workbook wb = null;
+            Worksheet sheet1 = null;
+
+            wb = excel.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            try
+            {
+                int row = 1;
+                sheet1 = (Worksheet)wb.Worksheets[1];
+                sheet1.Name = "Workout Plan";
+                sheet1.Cells[row, 1] = "Exercise Name";
+                sheet1.Cells[row, 2] = "Sets";
+                sheet1.Cells[row, 3] = "Reps";
+                var range = sheet1.get_Range("C1").EntireColumn;
+                range.NumberFormat = "@";
+
+                foreach (OutputStep step in outputSteps)
+                {
+                    row++;
+
+                    sheet1.Cells[row, 1] = step.ExerciseName;
+                    sheet1.Cells[row, 2] = step.NumberOfSets;
+                    sheet1.Cells[row, 3] = step.NumberOfReps;
+                }
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.DefaultExt = "xlsx";
+                saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                }
+
+                excel.Quit();
+                Marshal.ReleaseComObject(sheet1);
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(excel);
+                Marshal.ReleaseComObject(range);
+            }
+            catch (System.Exception exHandle)
+            {
+
+                System.Console.WriteLine("Exception: " + exHandle.Message);
+
+                System.Console.ReadLine();
+
+            }
         }
     }
 }

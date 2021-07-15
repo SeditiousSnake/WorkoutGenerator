@@ -158,7 +158,7 @@ namespace DatabaseTest
         {
             var steps = await excelService.GenerateWorkoutForTemplate();
             var outputSteps = GetOutputsForSteps(steps);
-            Console.WriteLine("");
+            await excelService.ExportToExcel(outputSteps);
         }
 
         private List<OutputStep> GetOutputsForSteps(List<WorkoutStep> inputSteps)
