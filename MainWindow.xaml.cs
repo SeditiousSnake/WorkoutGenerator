@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkoutGenerator;
 using WorkoutGenerator.UserControls;
 
 namespace DatabaseTest
@@ -53,7 +54,7 @@ namespace DatabaseTest
 
             _context.Exercises.RemoveRange(_context.Exercises);
             _context.SaveChanges();
-            _context.Exercises.AddRange(excelService.GetExercisesFromExcel());
+            _context.Exercises.AddRange(excelService.GetExerciseDatabaseFromExcel());
             _context.SaveChanges();
 
             categoryViewSource.Source =
@@ -151,6 +152,61 @@ namespace DatabaseTest
             Guid stepId = ((Guid)((ComboBox)sender).Tag);
             var stepToUpdate = planSteps.Single(x => x.StepId == stepId);
             stepToUpdate.Reps = GetRepsString(stepToUpdate.Exercise);
+        }
+
+        private async void PickTemplate(object sender, EventArgs e)
+        {
+            var steps = await excelService.GenerateWorkoutForTemplate();
+            var outputSteps = GetOutputsForSteps(steps);
+            Console.WriteLine("");
+        }
+
+        private List<OutputStep> GetOutputsForSteps(List<WorkoutStep> inputSteps)
+        {
+            List<OutputStep> outputSteps = new List<OutputStep>();
+            foreach (WorkoutStep inputStep in inputSteps)
+            {
+                var possibleExercises = _context.Exercises
+                .Where(x => x.BodyPart == inputStep.BodyPart
+                && x.TargetArea == inputStep.TargetArea
+                && x.Type == inputStep.Type)
+                .ToList();
+                Exercise randomExercise = possibleExercises[rand.Next(possibleExercises.Count)];
+                var outputStep = new OutputStep
+                {
+                    ExerciseName = randomExercise.Name,
+                    NumberOfSets = randomExercise.Sets,
+                    NumberOfReps = GetRepsString(randomExercise, inputStep.Reps)
+                };
+                outputSteps.Add(outputStep);
+            }
+
+            return outputSteps;
+        }
+
+        private string GetRepsString(Exercise exercise, string selectedPower)
+        {
+            var repsString = "";
+            //TODO: Need to stop basing this off current dropdown selection, instead use what was assigned to the exercise step
+            switch (selectedPower)
+            {
+                case ("Beginner"):
+                    repsString = exercise.Beginner;
+                    break;
+                case ("Normal"):
+                    repsString = exercise.Normal;
+                    break;
+                case ("Don"):
+                    repsString = exercise.Don;
+                    break;
+                case ("Don High"):
+                    repsString = exercise.DonHigh;
+                    break;
+                case ("Power"):
+                    repsString = exercise.Power;
+                    break;
+            }
+            return repsString;
         }
     }
 }

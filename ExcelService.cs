@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WorkoutGenerator;
 using WorkoutGenerator.UserControls;
 
 namespace DatabaseTest
@@ -11,7 +12,8 @@ namespace DatabaseTest
     public interface IExcelService
     {
         string GetCurrentDate();
-        List<Exercise> GetExercisesFromExcel();
+        List<Exercise> GetExerciseDatabaseFromExcel();
+        Task<List<WorkoutStep>> GenerateWorkoutForTemplate();
         Task ExportToExcel(List<PlanStep> planSteps);
     }
 
@@ -19,7 +21,7 @@ namespace DatabaseTest
     {
         public string GetCurrentDate() => System.DateTime.Now.ToLongDateString();
 
-        public List<Exercise> GetExercisesFromExcel()
+        public List<Exercise> GetExerciseDatabaseFromExcel()
         {
             List<Exercise> exercises = new List<Exercise>();
             string currentPath = System.Environment.CurrentDirectory;
@@ -51,40 +53,44 @@ namespace DatabaseTest
                         switch (cCnt)
                         {
                             case (1):
-                                currentExercise.BodyPart = cellValue.ToString(); ;
+                                currentExercise.BodyPart = cellValue.ToString().Trim();
                                 break;
                             case (2):
-                                currentExercise.Name = cellValue.ToString();
+                                currentExercise.Name = cellValue.ToString().Trim();
                                 break;
                             case (3):
-                                currentExercise.TargetArea = cellValue.ToString();
+                                currentExercise.TargetArea = cellValue.ToString().Trim();
                                 break;
                             case (4):
-                                currentExercise.Type = cellValue.ToString();
+                                currentExercise.Type = cellValue.ToString().Trim();
                                 break;
                             case (5):
-                                currentExercise.Sets = cellValue.ToString();
+                                currentExercise.Sets = cellValue.ToString().Trim();
                                 break;
                             case (6):
-                                currentExercise.Beginner = cellValue.ToString();
+                                currentExercise.Beginner = cellValue.ToString().Trim();
                                 break;
                             case (7):
-                                currentExercise.Normal = cellValue.ToString();
+                                currentExercise.Normal = cellValue.ToString().Trim();
                                 break;
                             case (8):
-                                currentExercise.Don = cellValue.ToString();
+                                currentExercise.Don = cellValue.ToString().Trim();
                                 break;
                             case (9):
-                                currentExercise.DonHigh = cellValue.ToString();
+                                currentExercise.DonHigh = cellValue.ToString().Trim();
                                 break;
                             case (10):
-                                currentExercise.Power = cellValue.ToString();
+                                currentExercise.Power = cellValue.ToString().Trim();
                                 break;
                         }
                     }
                     exercises.Add(currentExercise);
                 }
             }
+            excel.Quit();
+            Marshal.ReleaseComObject(sheet1);
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(excel);
 
             return exercises;
         }
@@ -141,6 +147,70 @@ namespace DatabaseTest
                 System.Console.ReadLine();
 
             }
+        }
+
+        public async Task<List<WorkoutStep>> GenerateWorkoutForTemplate()
+        {
+            List<WorkoutStep> steps = new List<WorkoutStep>();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = "xlsx";
+            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Application excel = new Application();
+                Workbook wb = excel.Workbooks.Open(openFileDialog.FileName);
+                Worksheet sheet1 = (Worksheet)wb.Worksheets[1];
+                Range range = sheet1.UsedRange;
+                object cellValue;
+                int rCnt;
+                int cCnt;
+                int rw;
+                int cl;
+
+                range = sheet1.UsedRange;
+                rw = range.Rows.Count;
+                cl = range.Columns.Count;
+                WorkoutStep currentStep;
+
+                for (rCnt = 4; rCnt <= rw; rCnt++)
+                {
+                    currentStep = new WorkoutStep();
+                    cellValue = (range.Cells[rCnt, 6] as Range).Value2;
+                    if (!(cellValue is null))
+                    {
+                        for (cCnt = 6; cCnt <= cl; cCnt++)
+                        {
+                            cellValue = (range.Cells[rCnt, cCnt] as Range).Value2;
+                            switch (cCnt)
+                            {
+                                case (6):
+                                    currentStep.BodyPart = cellValue.ToString().Trim(); ;
+                                    break;
+                                case (7):
+                                    currentStep.TargetArea = cellValue.ToString().Trim();
+                                    break;
+                                case (8):
+                                    currentStep.Type = cellValue.ToString().Trim();
+                                    break;
+                                case (9):
+                                    currentStep.Sets = cellValue.ToString().Trim();
+                                    break;
+                                case (10):
+                                    currentStep.Reps = cellValue.ToString().Trim();
+                                    break;
+                            }
+                        }
+                        steps.Add(currentStep);
+                    }
+                }
+
+                excel.Quit();
+                Marshal.ReleaseComObject(sheet1);
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(excel);
+            }
+
+            return steps;
         }
     }
 }

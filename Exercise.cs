@@ -18,9 +18,5 @@ namespace DatabaseTest
         public string Don { get; set; }
         public string DonHigh { get; set; }
         public string Power { get; set; }
-
-        public virtual ICollection<Product> Products
-        { get; private set; } =
-            new ObservableCollection<Product>();
     }
 }
