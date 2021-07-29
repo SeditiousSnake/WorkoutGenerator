@@ -167,17 +167,32 @@ namespace DatabaseTest
             foreach (WorkoutStep inputStep in inputSteps)
             {
                 var possibleExercises = _context.Exercises
-                .Where(x => x.BodyPart == inputStep.BodyPart
-                && x.TargetArea == inputStep.TargetArea
-                && x.Type == inputStep.Type)
-                .ToList();
-                Exercise randomExercise = possibleExercises[rand.Next(possibleExercises.Count)];
-                var outputStep = new OutputStep
+                    .Where(x => x.BodyPart == inputStep.BodyPart
+                    && x.TargetArea == inputStep.TargetArea
+                    && x.Type == inputStep.Type
+                    && x.Sets == inputStep.Sets)
+                    .ToList();
+
+                OutputStep outputStep;
+                if (possibleExercises.Count > 0)
                 {
-                    ExerciseName = randomExercise.Name,
-                    NumberOfSets = randomExercise.Sets,
-                    NumberOfReps = GetRepsString(randomExercise, inputStep.Reps)
-                };
+                    Exercise randomExercise = possibleExercises[rand.Next(possibleExercises.Count)];
+                    outputStep = new OutputStep
+                    {
+                        ExerciseName = randomExercise.Name,
+                        NumberOfSets = inputStep.Sets,
+                        NumberOfReps = GetRepsString(randomExercise, inputStep.Reps)
+                    };
+                } else
+                {
+                    outputStep = new OutputStep
+                    {
+                        ExerciseName = "Not Found",
+                        NumberOfSets = "",
+                        NumberOfReps = ""
+                    };
+                }
+                
                 outputSteps.Add(outputStep);
             }
 
